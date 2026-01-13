@@ -15,11 +15,12 @@ export default function UserProvider({ children }) {
       });
       setUser(data.user);
     } catch (error) {
-      if (err.response?.status === 401) {
+      if (error.response?.status === 401) {
           console.log("User not logged in yet");
+          setUser(null);
       }
       else{
-        console.error("Unexpected error:", err);
+        console.error("Unexpected error:", error);
       }
     } finally {
       setLoading(false);

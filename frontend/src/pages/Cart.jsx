@@ -3,34 +3,19 @@ import CartCard from "../components/CartCard";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Cart() {
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, fetchCart } = useContext(CartContext);
   const { user, loading } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) return; // wait until user is ready
+    if (loading) return;
 
     if (user) {
-      fetchCart(user._id);
-    } else {
-      setCartItems([]); // no user? empty cart
+      fetchCart();      
     }
   }, [loading, user]);
-
-  const fetchCart = async (userId) => {
-    try {
-      const { data } = await axios.get(`http://localhost:8000/api/v1/cart/${userId}`, {
-        withCredentials: true,
-      });
-      setCartItems(data.cartItems);
-    } catch (err) {
-      console.error("Failed to fetch cart:", err);
-      setCartItems([]);
-    }
-  };
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;
 
@@ -71,3 +56,4 @@ function Cart() {
 }
 
 export default Cart;
+
