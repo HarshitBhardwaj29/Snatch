@@ -12,7 +12,7 @@ function Register() {
     try {
       const res = await axios.post("http://localhost:8000/api/v1/register",{email,password,name},{ withCredentials: true })
       console.log(res.data);
-      navigate("/")
+      navigate("/home")
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +74,7 @@ function Register() {
 
         <p className="mt-6 text-center text-sm text-gray-700">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link to="/" className="text-blue-600 hover:underline">
             Login
           </Link>
         </p>
