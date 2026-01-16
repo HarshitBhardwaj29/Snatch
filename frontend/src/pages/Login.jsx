@@ -1,35 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useContext } from "react";
-import { UserContext} from "../context/UserContext";
-import {CartContext} from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
+import { CartContext } from "../context/CartContext";
+import { FiEye, FiEyeOff } from "react-icons/fi"; 
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
+
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
-  const { fetchUser } = useContext(UserContext);
+  const { setUser, fetchUser } = useContext(UserContext);
   const { fetchCart } = useContext(CartContext);
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/v1/login",{email,password},{ withCredentials: true } );
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/login",
+        { email, password },
+        { withCredentials: true }
+      );
       console.log(res.data);
       const user = res.data.data.user;
       setUser(user);
       await fetchUser();
       await fetchCart();
-      if(user.role==="admin"){
+      if (user.role === "admin") {
         navigate("/admin");
-      }
-      else{
+      } else {
         navigate("/home");
       }
     } catch (error) {
       console.log(error);
-      alert("please check your email or password")
+      alert("Please check your email or password");
     }
   };
 
@@ -56,18 +61,24 @@ function Login() {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-800">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="********"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-black sm:text-sm"
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-[38px] cursor-pointer text-gray-600"
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </span>
           </div>
 
           <button
@@ -90,4 +101,3 @@ function Login() {
 }
 
 export default Login;
-
