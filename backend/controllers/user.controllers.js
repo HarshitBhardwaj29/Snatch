@@ -29,7 +29,7 @@ const registerUser = asyncHandler( async (req,res) => {
 
     const existeduser  = await User.findOne({email});
     if(existeduser){
-        return new ApiError("404","user already Existed");
+        throw new ApiError("404","user already Existed");
     }
 
     const user = await User.create({
@@ -76,7 +76,8 @@ const loginUser = asyncHandler(async (req,res)=>{
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === "production",  
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
     }
 
     return res
@@ -110,7 +111,8 @@ const logoutUser = asyncHandler(async (req,res) =>{
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === "production",  
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
     }
 
     return res.status(200)

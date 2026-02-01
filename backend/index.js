@@ -1,24 +1,20 @@
 import dotenv from "dotenv";
+dotenv.config();
 
-dotenv.config({
-    path:'./.env'
-})
-
-console.log("🌎 Environment variables loaded:");
 import { configureCloudinary } from "./utils/cloudinary.js";
-configureCloudinary();
-
-import {app} from './app.js'
+import { app } from "./app.js";
 import connectDB from "./db/index.js";
 
+configureCloudinary();
+const PORT = process.env.PORT || 8000;
 
 connectDB()
-.then(()=>{
-    app.listen(process.env.PORT || 8000 , ()=>{
-        console.log(`Server is runnig at port : ${process.env.PORT}`)
-    })
-})
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error(" MongoDB connection failed:", err);
+  });
 
-.catch((err)=>{
-    console.log("MOngo db connection failed!!!",err)
-})
