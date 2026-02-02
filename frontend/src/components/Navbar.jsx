@@ -10,7 +10,7 @@ function Navbar({ search, setSearch, category, setCategory }) {
 
   const logout = async () => {
     try {
-      await axios.post("http://localhost:8000/api/v1/logout", {}, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {}, { withCredentials: true });
       console.log("done");
       navigate("/");
     } catch (err) {
