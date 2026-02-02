@@ -10,7 +10,7 @@ export default function UserProvider({ children }) {
   const fetchUser = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v1/me", {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/me`, {
         withCredentials: true,
       });
       setUser(data.user);

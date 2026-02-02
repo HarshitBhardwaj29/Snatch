@@ -11,7 +11,7 @@ export default function CartProvider({ children }) {
   const fetchCart = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/cart",
+        `${import.meta.env.VITE_API_URL}/api/v1/cart`,
         { withCredentials: true }
       );
       setCartItems(response.data.data);
@@ -27,7 +27,7 @@ export default function CartProvider({ children }) {
   const addcart = async (productId, quantity = 1) => {
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/addtocart",
+        `${import.meta.env.VITE_API_URL}/api/v1/addtocart`,
         { productId, quantity },
         { withCredentials: true }
       );
@@ -40,7 +40,7 @@ export default function CartProvider({ children }) {
   const removefromcart = async (productId, quantity = 1) => {
     try {
       await axios.delete(
-        "http://localhost:8000/api/v1/removefromcart",
+        `${import.meta.env.VITE_API_URL}/api/v1/removefromcart`,
         {
           data: { productId, quantity },
           withCredentials: true,

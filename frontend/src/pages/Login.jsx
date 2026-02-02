@@ -18,7 +18,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/login",
+        `${import.meta.env.VITE_API_URL}/api/v1/login`,
         { email, password },
         { withCredentials: true }
       );

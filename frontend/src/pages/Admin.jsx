@@ -26,17 +26,14 @@ function Admin() {
     formData.append('productimage', image);
 
     try {
-      const { data } = await axios.post('http://localhost:8000/api/v1/admin', formData, {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/admin`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
         withCredentials: true
       });
       setMessage('✅ Product created successfully!');
-
       console.log(data);
-
-      // 🧹 Reset the form after short delay
       setTimeout(() => {
         window.location.reload();
       }, 1500);

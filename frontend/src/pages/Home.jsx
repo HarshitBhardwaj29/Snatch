@@ -17,7 +17,7 @@ function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/v1/home", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/home`, {
         params: { search, category, page },
         withCredentials: true,
       });
