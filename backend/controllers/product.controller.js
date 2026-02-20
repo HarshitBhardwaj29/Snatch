@@ -46,7 +46,7 @@ const getProductByid = asyncHandler(async(req,res)=>{
     if(!product){
         throw new  ApiError(404,"Product not found")
     }
-    res.status(202).json(
+    res.status(200).json(
         new  ApiResponse(200,product,"Product found")
     )
 })
